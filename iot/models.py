@@ -10,7 +10,7 @@ class Client(models.Model):
     * :attr:`client_id`
     * :attr:`client_secret`
     """
-    name = models.CharField(max_length=255,blank=True)
+    name = models.CharField(max_length=255)
     client_id = models.CharField(max_length=255,blank = True)
     client_secret = models.CharField(max_length=255,blank = True)
 
