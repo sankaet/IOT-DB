@@ -11,7 +11,7 @@ from iot import iot_schemas
 from iot import common_functions
 # Create your views here.
 
-TRACEBACK_ENABLED = False
+TRACEBACK_ENABLED = True
 
 def exception_wrapper(func):
 	def func_wrapper(*args, **kwargs):
@@ -65,5 +65,45 @@ def schema_by_id(request,schema_id):
 		payload['_id'] = schema_id
 		payload['client'] = request.client.id
 		response = json.dumps(iot_schemas.put(payload))
+
+	return HttpResponse(response,content_type="application/json")
+
+@exception_wrapper
+def data(request,schema_id):
+	if request.method not in ['GET','POST']:
+		raise IncorrectMethod('{0} method not allowed'.format(request.method))
+	if not common_functions.auth_client(request):
+		raise InvalidClient('Invalid client credentials supplied')
+	if request.method == 'GET':
+		response = json.dumps(iot_data.get_all(schema_id,request.client.id))
+	elif request.method == 'POST':
+		payload = json.loads(request.body)
+		sample_payload = iot_schemas.get(schema_id)
+		sample_payload['schema_id'] = schema_id
+		sample_payload.pop('_id',None)
+		payload['client'] = request.client.id
+		payload['schema_id'] = schema_id
+		payload = common_functions.fixPayload(sample_payload,payload,request)
+		response = json.dumps(iot_data.post(payload))
+
+	return HttpResponse(response,content_type="application/json")
+
+@exception_wrapper
+def data_by_id(request,schema_id,data_id):
+	if request.method not in ['GET','PUT']:
+		raise IncorrectMethod('{0} method not allowed'.format(request.method))
+	if not common_functions.auth_client(request):
+		raise InvalidClient('Invalid client credentials supplied')
+	if request.method == 'GET':
+		response = json.dumps(iot_data.get(data_id,schema_id,request.client.id))
+	elif request.method == 'PUT':
+		payload = json.loads(request.body)
+		sample_payload = iot_schemas.get(schema_id)
+		sample_payload['schema_id'] = schema_id
+		payload['client'] = request.client.id
+		payload['schema_id'] = schema_id
+		payload['_id'] = data_id
+		payload = common_functions.fixPayload(sample_payload,payload,request)
+		response = json.dumps(iot_data.put(payload))
 
 	return HttpResponse(response,content_type="application/json")

@@ -13,4 +13,6 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^v1/schemas$', v1_views.schemas, name='schemas'),
     url(r'^v1/schemas/(?P<schema_id>[-\w]+)$', v1_views.schema_by_id, name='schema_by_id'),
+    url(r'^v1/schemas/(?P<schema_id>[-\w]+)/data$', v1_views.data, name='data'),
+    url(r'^v1/schemas/(?P<schema_id>[-\w]+)/data/(?P<data_id>[-\w]+)$', v1_views.data_by_id, name='data_by_id'),
 )
