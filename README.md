@@ -25,7 +25,6 @@ Request
 
 ```
 curl -X GET -H "Content-Type: application/json" -H "X-IOT-CLIENT: id-a6603153-293c-4d3e-8d60-d189615c814f|secret-a41654b2-dac7-448f-8456-c7082dee439a" 'http://162.243.3.84/v1/schemas'
-
 ```
 
 Response
@@ -33,33 +32,83 @@ Response
 ```
 [
   {
-    "y": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "x": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "_id": "565be18dc6f0c01c0967292d",
+    "temps_in_c": [10,15],
+    "_id": "565be171c6f0c01c08919072",
+    "name": "Name of Data",
+    "time_in_sec": [1234345,1234349],
     "client": 1
   },
   {
-    "temps_in_c": [
-      10,
-      15
-    ],
-    "_id": "565be171c6f0c01c08919072",
-    "name": "Name of Data",
-    "time_in_sec": [
-      1234345,
-      1234349
-    ],
-    "client": 1
+  	...
+  },
+  {
+  	...
   }
 ]
+```
+
+# POST Schemas
+
+Request
+
+```
+curl -X POST -H "Content-Type: application/json" -H "X-IOT-CLIENT: id-a6603153-293c-4d3e-8d60-d189615c814f|secret-a41654b2-dac7-448f-8456-c7082dee439a" -d '{
+    "x":[1,2,3,4],
+    "y":[1,2,3,4]
+}' 'http://162.243.3.84/v1/schemas'
+```
+
+Response
+
+```
+{
+  "y": [1,2,3,4],
+  "x": [1,2,3,4],
+  "client": 1,
+  "_id": "565d0140c6f0c02cd5560ccb"
+}
+```
+
+#GET Schema
+
+Request
+
+```
+curl -X GET -H "Content-Type: application/json" -H "X-IOT-CLIENT: id-a6603153-293c-4d3e-8d60-d189615c814f|secret-a41654b2-dac7-448f-8456-c7082dee439a" 'http://162.243.3.84/v1/schemas/565be171c6f0c01c08919072'
+```
+
+Response
+
+```
+{
+  "temps_in_c": [10,15],
+  "_id": "565be171c6f0c01c08919072",
+  "name": "Name of Data",
+  "time_in_sec": [1234345,1234349],
+  "client": 1
+}
+```
+
+#PUT (update) Schema
+
+Request
+
+```
+curl -X PUT -H "Content-Type: application/json" -H "X-IOT-CLIENT: id-a6603153-293c-4d3e-8d60-d189615c814f|secret-a41654b2-dac7-448f-8456-c7082dee439a" -d '{
+    "name":"Smart Thermo 1",
+    "temps_in_c":[10,15],
+    "time_in_sec":[1234345,1234349]
+}' 'http://162.243.3.84/v1/schemas/565be171c6f0c01c08919072'
+```
+
+Response
+
+```
+{
+  "temps_in_c": [10,15],
+  "_id": "565be171c6f0c01c08919072",
+  "name": "Smart Thermo 1",
+  "time_in_sec": [1234345,1234349],
+  "client": 1
+}
 ```
