@@ -113,6 +113,10 @@ Response
 }
 ```
 
+# Data(Schema)
+
+For every schema created, you can add corresponding data as well. Specified schema protects the structural integrity of the data so that you always know what to expect. You can add multiple data objects for a specified schema.
+
 # GET Data
 
 Request
