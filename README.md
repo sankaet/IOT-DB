@@ -1,2 +1,2 @@
 # IOT-DB
-Sample application that allows IOTs build schemas &amp; store/view data
+Sample application that allows IOTs to store/view data.
